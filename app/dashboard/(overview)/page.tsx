@@ -9,6 +9,20 @@ import {
   CardsSkeleton,
 } from "@/app/ui/skeletons";
 
+import postgres from "postgres";
+
+async function logUser() {
+  try {
+    const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
+    console.log("name", sql("SELECT * FROM users"));
+  } catch (error) {
+    console.error("Failed to fetch user:", error);
+    throw new Error("Failed to fetch user.");
+  }
+}
+
+logUser();
+
 export default async function Page() {
   return (
     <main>
